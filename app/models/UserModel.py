@@ -47,70 +47,70 @@ class UserModel(Model):
     def __init__(self):
         super(UserModel, self).__init__()
 
-    def login_user(self, user_info):
+    def loginUser(self, userInfo):
         # to collect error messages
         errors=[]
 
         #inital verification before connecting to database
-        if len(user_info['email']) < 2 or len (user_info['passw']) < 2:
+        if len(userInfo['email']) < 2 or len (userInfo['passw']) < 2:
             errors.append("Email and/or password is too short")
-        elif not EMAIL_REGEX.match(user_info['email']):
+        elif not EMAIL_REGEX.match(userInfo['email']):
             errors.append("Please enter valid email format")
         if errors:
             return {'status' : False, 'errors' : errors}
         else:
             #intital verifiaction passed now searching for valid login
             query = "SELECT * FROM users WHERE email = :email"
-            data = {'email' : user_info['email']}
+            data = {'email' : userInfo['email']}
             #run query and assign to varuable 
-            loged_in_user = self.db.query_db(query,data) 
+            logedinUser = self.db.query_db(query,data) 
             # print ('$' * 25)
             # print loged_in_user
             # print ('$' * 25)
             
             #verify if anything returned if not, user does not exists
-            if len(loged_in_user) == 0:
+            if len(logedinUser) == 0:
                 errors.append("User was not found, please register")
             #user email is found, verifing the password is correct
-            elif not self.bcrypt.check_password_hash(loged_in_user[0]['password'], user_info['passw']):
+            elif not self.bcrypt.check_password_hash(logedinUser[0]['password'], userInfo['passw']):
                 errors.append("Password is not valid")
                 return {'status' : False, 'errors' : errors}
             else:
                 #login was successful
-                return {'status' : True, 'user' : loged_in_user}
+                return {'status' : True, 'user' : logedinUser}
 
 
-    def register_user(self, user_info):
+    def register_user(self, userInfo):
         errors=[]
 
         #setting up todays date to use it for date validation
         # today = datetime.now().strftime("%Y-%m-%d")
         # however I am using at least 1 year back to use this application
-        valid_date = '2015-01-01'
+        validDate = '2015-01-01'
 
         #validation prior to inserting data to db
-        if len(user_info['f_name']) < 2:
+        if len(userInfo['fname']) < 2:
             errors.append("First name cannot be empty")
-        elif not NOSPACE_REGEX.match(user_info['f_name']):
+        elif not NOSPACE_REGEX.match(userInfo['fName']):
             errors.append("Please enter a valid first name")
-        elif len(user_info['l_name']) < 2 :
+        elif len(userInfo['lName']) < 2 :
             errors.append("Last name cannot be empty")
-        elif len(user_info['alias']) < 2 :
-            errors.append("Alias cannot be empty")
-        elif not NOSPACE_REGEX.match(user_info['f_name']):
+        elif not NOSPACE_REGEX.match(userInfo['lName']):
             errors.append("Please enter a valid last name")
-        elif len(user_info['email']) < 2 :
+        elif len(userInfo['alias']) < 2 :
+            errors.append("Alias cannot be empty")
+        elif len(userInfo['email']) < 2 :
             errors.append("Email cannot be empty")
-        elif not EMAIL_REGEX.match(user_info['email']):
+        elif not EMAIL_REGEX.match(userInfo['email']):
             errors.append("Please enter a valid email format")
-        elif not PW_REGEX.match(user_info['passw']):
+        elif not PW_REGEX.match(userInfo['passw']):
             errors.append("Please enter a valid password. It must be 8 charater long, at must include least one upper case and number")
-        elif len(user_info['conf_passw']) < 2 :
+        elif len(userInfo['confPassw']) < 2 :
             errors.append("Confirm password cannot be empty")
-        elif not (user_info['passw'] == user_info['conf_passw']):
+        elif not (userInfo['passw'] == userInfo['confPassw']):
             errors.append("Password and confirm password must match")   
-        # elif today < user_info['birthday']:
-        elif valid_date < user_info['birthday']:
+        # elif today < userInfo['birthday']:
+        elif valid_date < userInfo['birthday']:
             errors.append("You must been born 2014 or before to use this application")
 
         if errors:
@@ -118,24 +118,24 @@ class UserModel(Model):
         else:
             #check to see if email already in use
             query = "SELECT * FROM users WHERE email = :email"
-            data = {'email': user_info['email']}
-            email_inuse = self.db.query_db(query, data)
+            data = {'email': userInfo['email']}
+            emailInuse = self.db.query_db(query, data)
 
-            if email_inuse:
+            if emailInuse:
                 errors.append("Email account already in use")
                 return {"status": False, "errors": errors}
             else:
                 query = "INSERT INTO users (first_name, last_name, alias, email, password, birthday, created_at, updated_at) VALUES (:f_name, :l_name, :alias, :email, :passw, :birthday, NOW(), NOW())"
                 #password needs to be converted from plain text before can be part of data
-                password = user_info['passw']
-                hashed_pw = self.bcrypt.generate_password_hash(password)
+                password = userInfo['passw']
+                hashedPW = self.bcrypt.generate_password_hash(password)
                 data = {
-                    'f_name':user_info['f_name'],
-                    'l_name':user_info['l_name'],
-                    'alias' :user_info['alias'],
-                    'email':user_info['email'],
-                    'passw':hashed_pw,
-                    'birthday':user_info['birthday'],
+                    'f_name':userInfo['f_name'],
+                    'l_name':userInfo['l_name'],
+                    'alias' :userInfo['alias'],
+                    'email':userInfo['email'],
+                    'passw':hashedPW,
+                    'birthday':userInfo['birthday'],
                 }
                 registered_user = self.db.query_db(query, data)
                 # print ('%' * 25)

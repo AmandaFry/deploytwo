@@ -10,46 +10,46 @@ class User(Controller):
         #It is needed for inital page load
         return self.load_view('index.html')
 
-    def login(self):
+    def processLogin(self):
         #information collected to logon
-        user_info = {
+        userInfo = {
             'email' : request.form['email'],
             'passw' : request.form['passw']
         }
         #sending information to model
-        user_login = self.models['UserModel'].login_user(user_info)
+        userLogin = self.models['UserModel'].loginUser(userInfo)
         
         #information returned from model
-        if user_login['status']  == False:
+        if userLogin['status']  == False:
             #return to logon page and show errors
-            for message in user_login['errors']:
+            for message in userLogin['errors']:
                 flash(message)
             return self.load_view('index.html')
         else:
             #login and store name and id in session
-            session['id'] = user_login['user'][0]['id']
-            session['name'] = user_login['user'][0]['first_name'] + ' ' + user_login['user'][0]['last_name']
+            session['id'] = userLogin['user'][0]['id']
+            session['name'] = userLogin['user'][0]['first_name'] + ' ' + userLogin['user'][0]['last_name']
             return redirect('/dashboard')
  
 
-    def register(self):
+    def processRegister(self):
         #information collected to register
-        user_info = {
-            'f_name' : request.form['f_name'],
-            'l_name' : request.form['l_name'],
+        userInfo = {
+            'fName' : request.form['fName'],
+            'lName' : request.form['lName'],
             'alias' : request.form['alias'],
             'email' : request.form['email'],
             'passw' : request.form['passw'],
-            'conf_passw' : request.form['conf_passw'],
+            'confPassw' : request.form['confPassw'],
             'birthday' : request.form['birthday']
         }
 
         #sending information to model
-        user_register = self.models['UserModel'].register_user(user_info)
+        userRegister = self.models['UserModel'].registerUser(userInfo)
 
         #process returned information
-        if user_register['status'] == False:
-            for message in user_register['errors']:
+        if userRegister['status'] == False:
+            for message in userRegister['errors']:
                 flash(message)
             return self.load_view('index.html')
         else:

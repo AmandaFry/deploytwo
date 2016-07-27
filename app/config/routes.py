@@ -1,13 +1,13 @@
 from system.core.router import routes
 
 routes['default_controller'] = 'User'
-routes['POST']['/login'] = 'User#login'
-routes['POST']['/register'] = 'User#register'
+routes['POST']['/login'] = 'User#processLogin'
+routes['POST']['/register'] = 'User#processRegister'
 routes['GET']['/logout'] = 'User#logout'
 routes['GET']['/dashboard'] = 'Friend#dashboard'
 routes['GET']['/profile/<id>'] = 'Friend#profile'
-routes['GET']['/add/<id>'] = 'Friend#add_friend'
-routes['GET']['/remove/<id>'] = 'Friend#remove_friend'
+routes['GET']['/add/<id>'] = 'Friend#addFriend'
+routes['GET']['/remove/<id>'] = 'Friend#removeFriend'
 
 """
     You can add routes and specify their handlers as follows:

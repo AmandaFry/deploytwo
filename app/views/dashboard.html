@@ -48,11 +48,11 @@
                         <th class="tab">Name - Alias</th>
                         <th class="tab">Action</th>
                     </tr>
-                     {% if not_friends %}
-                        {% for not_friend in not_friends %}
+                     {% if notFriends %}
+                        {% for notFriend in notFriends %}
                             <tr>
-                                <td class="tab"><a href="/profile/{{ not_friend['id'] }}">{{ not_friend['first_name'] }} - {{ not_friend['alias'] }}</a></td>
-                                <td class="tab"><a href="/add/{{ not_friend['id'] }}">Add as friend - {{ not_friend['id'] }}</a></td>
+                                <td class="tab"><a href="/profile/{{ notFriend['id'] }}">{{ notFriend['first_name'] }} - {{ notFriend['alias'] }}</a></td>
+                                <td class="tab"><a href="/add/{{ notFriend['id'] }}">Add as friend - {{ notFriend['id'] }}</a></td>
                             </tr>
                         {% endfor %}
                     {% endif%}

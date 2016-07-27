@@ -8,15 +8,15 @@ class Friend(Controller):
         # self.db = self._app.db
 
     def dashboard(self):
-        friends = self.models['FriendModel'].my_friends()
+        friends = self.models['FriendModel'].myFriends()
         # print ('%' * 25)
         # print friends
         # print ('%' * 25)
-        not_friends = self.models['FriendModel'].not_friends()
+        notFriends = self.models['FriendModel'].notFriends()
         # print ('!' * 25)
         # print not_friends
         # print ('!' * 25)
-        return self.load_view('dashboard.html', friends=friends, not_friends=not_friends)
+        return self.load_view('dashboard.html', friends=friends, notFriends=notFriends)
 
     def profile(self,id):
         profile = self.models['FriendModel'].profile(id)
@@ -25,16 +25,16 @@ class Friend(Controller):
         # print ('%' * 25)
         return self.load_view('profile.html', profile=profile)
 
-    def add_friend(self, id):
-        add_friend = self.models['FriendModel'].add_friend(id)
+    def addFriend(self, id):
+        addFriend = self.models['FriendModel'].addFriend(id)
         # print ('!' * 25)
-        # print add_friend
+        # print addFriend
         # print ('!' * 25)
         return redirect ('/dashboard')
 
-    def remove_friend(self, id):
-        remove_friend = self.models['FriendModel'].remove_friend(id)
+    def removeFriend(self, id):
+        removeFriend = self.models['FriendModel'].removeFriend(id)
         print ('!' * 25)
-        print remove_friend
+        print removeFriend
         print ('!' * 25)
         return redirect ('/dashboard')
