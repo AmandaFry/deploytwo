@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+    <meta charset="UTF-8">
+	<title>TODO: Title goes here</title>
+	<meta name="description" content="TODO: description goes here ">
+    <!-- linking a css style sheet -->
+    <link rel="stylesheet" href="/static/css/styles.css" type="text/css">
+	<link rel="stylesheet" type="text/css" href="/static/css/AmandaTemplate.css">
+   </head>
+<body>	
+    <div class="container">
+        <div class="header">
+            <h1><span>(Pylot) </span> Friends List Dashboard</h1>
+            <h3>Assigment - optional</h3>
+            <div class="descr">
+                <p>Assigment description: User login and registration with validation</p>
+            </div>
+        </div><!-- end of header content-->
+        <div class="maincontent">
+            <div class="row">
+            <p style="text-align:right"> Welcome: <span class="boldme">{{ session['name']}}</span> - ({{ session['id']}}) - <a href="/logout">Logout</a></p>
+            </div>
+
+            <div class="row">
+                <h3>Here is the list of your friends:</h3>
+                <table>
+                    <tr>
+                        <th class="tab">Name - Alias</th>
+                        <th class="tab">Action</th>
+                    </tr>
+                    {% if friends %}
+                        {% for friend in friends %}
+                            <tr>
+                                <th class="tab">{{ friend['first_name'] }} - {{ friend['alias'] }}</th>
+                                <th class="tab"><a href="/profile/{{ friend['id'] }}">View Profile - {{ friend['id'] }}</a> <a href="/remove/{{ friend['id'] }}">Remove friend - {{ friend['id'] }}</a></th>
+                            </tr>
+                        {% endfor %}
+                    {% endif%}
+                </table>
+            </div>
+            </br>
+
+            <div class="row">
+                <h3>Other users not on your friend list:</h3>
+                <table>
+                    <tr>
+                        <th class="tab">Name - Alias</th>
+                        <th class="tab">Action</th>
+                    </tr>
+                     {% if not_friends %}
+                        {% for not_friend in not_friends %}
+                            <tr>
+                                <td class="tab"><a href="/profile/{{ not_friend['id'] }}">{{ not_friend['first_name'] }} - {{ not_friend['alias'] }}</a></td>
+                                <td class="tab"><a href="/add/{{ not_friend['id'] }}">Add as friend - {{ not_friend['id'] }}</a></td>
+                            </tr>
+                        {% endfor %}
+                    {% endif%}
+                </table>
+            </div>
+            
+            
+        </div><!-- end of main content-->
+        <div class="footer">
+            <p>created by: Amanda Fry</p>
+            <a class="footerSpace" href="mailto:FeAmandaF@hotmail.com">FeAmandaF@hotmail.com</a>
+            <a href="https://www.linkedin.com/in/amandafry1">Amanda's LinkedIn profile</a>
+        </div><!-- end of footer -->
+      </div><!-- end of container -->
+</body>
+</html>

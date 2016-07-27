@@ -1,8 +1,63 @@
+<!DOCTYPE HTML>
 <html>
-  <head>
+<head> 
+    <meta charset="UTF-8">
+	<title>TODO: Title goes here</title>
+	<meta name="description" content="TODO: description goes here ">
+    <!-- linking a css style sheet -->
     <link rel="stylesheet" href="/static/css/styles.css" type="text/css">
-  </head>
-  <body>
-    The best place to start is the "WelcomeController.py" file in app/controllers.
-  </body>
+	<link rel="stylesheet" type="text/css" href="/static/css/AmandaTemplate.css">
+   </head>
+<body>	
+    <div class="container">
+        <div class="header">
+            <h1><span>(Python - Pylot) </span> Exam A - Friends</h1>
+            <h3>Assigment - optional</h3>
+            <div class="descr">
+                <p>Assigment description:</p>
+                <p>fill in</p>
+                <ul>
+                    <li>one</li>
+                    <li>two</li>
+                </ul>
+            </div>
+        </div><!-- end of header content-->
+        <div class="maincontent">
+            <!-- Flas message to communicate errors -->
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p style="color: red; margin-left: 25%">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div class="column">
+            <h2>Log In</h2>
+                <form  action="/login" method="POST">
+                    <div class="row">Email: <input type="text" name="email"></div>
+                    <div class="row">Password: <input type="password" name="passw"></div>
+                    <div class="row"><input type="submit" name="login" value="Log In"></div>
+                </form>
+            </div>
+            <div class="column">
+                <h2>Registration</h2>
+                <form  action="/register" method="POST">
+                    <div class="row">First Name: <input type="text" name="f_name"></div>
+                    <div class="row">Last Name: <input type="text" name="l_name"></div>
+                    <div class="row">Alias: <input type="text" name="alias"></div>
+                    <div class="row">Email: <input type="text" name="email"></div>
+                    <div class="row">Password: <input type="password" name="passw"></div>
+                    <div class="row">Confirm Password: <input type="password" name="conf_passw"></div>
+                    <div class="row">Date of birth: <input type="date" name="birthday"></div>
+                    <div class="row"><input type="submit" name="register" value="Register"></div>
+                </form>
+            </div>
+        </div><!-- end of main content-->
+        <div class="footer">
+            <p>created by: Amanda Fry</p>
+            <a class="footerSpace" href="mailto:FeAmandaF@hotmail.com">FeAmandaF@hotmail.com</a>
+            <a href="https://www.linkedin.com/in/amandafry1">Amanda's LinkedIn profile</a>
+        </div><!-- end of footer -->
+      </div><!-- end of container -->
+</body>
 </html>
