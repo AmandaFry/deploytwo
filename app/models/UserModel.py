@@ -77,7 +77,7 @@ class UserModel(Model):
                 return {'status' : True, 'user' : logedinUser}
 
 
-    def register_user(self, userInfo):
+    def registerUser(self, userInfo):
         errors=[]
 
         #setting up todays date to use it for date validation
@@ -86,7 +86,7 @@ class UserModel(Model):
         validDate = '2015-01-01'
 
         #validation prior to inserting data to db
-        if len(userInfo['fname']) < 2:
+        if len(userInfo['fName']) < 2:
             errors.append("First name cannot be empty")
         elif not NOSPACE_REGEX.match(userInfo['fName']):
             errors.append("Please enter a valid first name")
@@ -122,19 +122,19 @@ class UserModel(Model):
                 errors.append("Email account already in use")
                 return {"status": False, "errors": errors}
             else:
-                query = "INSERT INTO users (first_name, last_name, alias, email, password, birthday, created_at, updated_at) VALUES (:f_name, :l_name, :alias, :email, :passw, :birthday, NOW(), NOW())"
+                query = "INSERT INTO users (first_name, last_name, alias, email, password, birthday, created_at, updated_at) VALUES (:fName, :lName, :alias, :email, :passw, :birthday, NOW(), NOW())"
                 #password needs to be converted from plain text before can be part of data
                 password = userInfo['passw']
                 hashedPW = self.bcrypt.generate_password_hash(password)
                 data = {
-                    'f_name':userInfo['f_name'],
-                    'l_name':userInfo['l_name'],
+                    'fName':userInfo['fName'],
+                    'lName':userInfo['lName'],
                     'alias' :userInfo['alias'],
                     'email':userInfo['email'],
                     'passw':hashedPW,
                     'birthday':userInfo['birthday'],
                 }
-                registered_user = self.db.query_db(query, data)
+                registeredUser = self.db.query_db(query, data)
                 return {"status": True }
                 
 
