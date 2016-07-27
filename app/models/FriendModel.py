@@ -16,41 +16,9 @@ class FriendModel(Model):
         return (my_friends)
 
     def notFriends(self):
-        # notIn =''
-        # query = "SELECT users.first_name, users.alias, users.id FROM users LEFT JOIN friendslist ON users.id = friendslist.user_id WHERE users.id != :id"
-        #query = "SELECT * from users WHERE users.id !=:id AND users.id NOT IN (SELECT users.id as UsersID FROM users JOIN friendslist ON users.id = friendslist.user_id WHERE users.id = :id);"
         query = "SELECT * from users WHERE users.id !=:id AND users.id NOT IN (select friend_id from friendslist where user_id = :id);"
         data = { 'id' : session['id']}
-        # query = "SELECT  users.first_name, users.alias, friendslist.friend_id as friendID, users.id as UsersID FROM users JOIN friendslist ON users.id = friendslist.user_id WHERE users.id = :id"
-        # data = { 'id' : session['id']}
-        # partial_notfriend = self.db.query_db(query, data)
-        # print ('&' * 25)
-        # print partial_notfriend
-        # print ('&' * 25)
-
-        # for i in partial_notfriend:
-        #     # print ('*' * 25)
-        #     # print 'from server', i['friendID']
-        #     # print ('*' * 25)
-        #     # notInOne = int(i['friendID'])
-        #     # print ('*' * 25)
-        #     # print 'The notinOne', notInOne
-        #     # print ('*' * 25)
-        #     # notIn+= notIn+ ', ' +str(notInOne)
-        #     notIn+=str(i['friendID']) + ', '
-
-        # notIn = notIn + str(session['id'])
-        # print ('*' * 25)
-        # print 'Final notin', notIn
-        # print ('*' * 25)
-        # # query = "SELECT * from users WHERE users.id NOT IN (:friends) AND users.id !=:id"
-        # query = "SELECT * from users WHERE users.id NOT IN (:friends)"
-        # data = { 'friends': notIn }
         notFriends = self.db.query_db(query, data)
-
-        # print ('^' * 25)
-        # print not_friends
-        # print ('^' * 25)
         return (notFriends)
 
     def profile(self, id):

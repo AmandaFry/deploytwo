@@ -64,9 +64,6 @@ class UserModel(Model):
             data = {'email' : userInfo['email']}
             #run query and assign to varuable 
             logedinUser = self.db.query_db(query,data) 
-            # print ('$' * 25)
-            # print loged_in_user
-            # print ('$' * 25)
             
             #verify if anything returned if not, user does not exists
             if len(logedinUser) == 0:
@@ -110,7 +107,7 @@ class UserModel(Model):
         elif not (userInfo['passw'] == userInfo['confPassw']):
             errors.append("Password and confirm password must match")   
         # elif today < userInfo['birthday']:
-        elif valid_date < userInfo['birthday']:
+        elif validDate < userInfo['birthday']:
             errors.append("You must been born 2014 or before to use this application")
 
         if errors:
@@ -138,9 +135,6 @@ class UserModel(Model):
                     'birthday':userInfo['birthday'],
                 }
                 registered_user = self.db.query_db(query, data)
-                # print ('%' * 25)
-                # print registered_user
-                # print ('%' * 25)
                 return {"status": True }
                 
 
